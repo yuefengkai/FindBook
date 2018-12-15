@@ -28,7 +28,7 @@ namespace User.Api.Data {
                     userContext.Database.Migrate ();
 
                     if (!userContext.Users.Any ()) {
-                        userContext.Users.Add (new Models.AppUser { Name = $@"gzz" });
+                        userContext.Users.Add (new Models.AppUser { Name = $@"gzz" ,Company = "FreeMan"});
 
                         userContext.SaveChanges ();
                     }

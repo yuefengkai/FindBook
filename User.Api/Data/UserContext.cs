@@ -36,5 +36,8 @@ namespace User.Api.Data
 
 
         public DbSet<AppUser> Users { get; set; }
+        public DbSet<UserProperty> UserPropertys { get; set; }
+        public DbSet<UserTag> UserTags { get; set; }
+        public DbSet<BPFile> BPFiles { get; set; }
     }
 }
