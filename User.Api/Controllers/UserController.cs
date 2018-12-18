@@ -99,5 +99,25 @@ namespace User.Api.Controllers
             return Json(entity);
         }
 
+        /// <summary>
+        /// 检测或创建用户(当用户手机不存在时创建用户)
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+       [Route("check-or-create")]
+        [HttpPost]
+        public async Task<IActionResult> CreateOrCreate(string phone)
+        {
+            //TDB 做手机号码格式验证
+
+            if (!await _userContext.Users.AnyAsync(u => u.Phone == phone))
+            {
+                _userContext.Users.Add(new AppUser {Phone = phone});
+                await _userContext.SaveChangesAsync();
+            }
+
+            return Ok();
+        }
+
     }
 }
