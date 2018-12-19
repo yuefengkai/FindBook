@@ -110,13 +110,17 @@ namespace User.Api.Controllers
         {
             //TDB 做手机号码格式验证
 
-            if (!await _userContext.Users.AnyAsync(u => u.Phone == phone))
-            {
-                _userContext.Users.Add(new AppUser {Phone = phone});
-                await _userContext.SaveChangesAsync();
-            }
+            var user = _userContext.Users.SingleOrDefault(u => u.Phone == phone);
 
-            return Ok();
+            if (user != null) return Ok(user.Id);
+            
+            user = new AppUser {Phone = phone};
+                
+            _userContext.Users.Add(user);
+                
+            await _userContext.SaveChangesAsync();
+
+            return Ok(user.Id);
         }
 
     }

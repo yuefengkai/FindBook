@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Net.Http;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using User.Identity.Authentication;
+using User.Identity.Services;
 
 namespace User.Identity
 {
@@ -30,10 +32,11 @@ namespace User.Identity
             //注入Application Service
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-           
+            services.AddSingleton(new HttpClient());
 
-        
-
+            services.AddScoped<IAuthCodeService, TestAuthCodeService>()
+                .AddScoped<IUserService, UserService>();
+            
             services.AddMvc();
           
         }
@@ -50,5 +53,9 @@ namespace User.Identity
 
             app.UseMvc();
         }
+    }
+
+    public interface IHttpClient
+    {
     }
 }
